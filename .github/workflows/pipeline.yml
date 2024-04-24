@@ -20,7 +20,7 @@ jobs:
 
     - name: Instalação das dependências
       run: |
-        pip install -r requirements.txt
+        pip install -r app/python/requirements.txt
 
     - name: Execução dos testes
       run: |

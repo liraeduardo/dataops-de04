@@ -162,3 +162,6 @@ cython_debug/
 #.ipynb
 .csv
 __pycache__
+
+#doc
+.docx

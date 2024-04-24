@@ -1,0 +1,6 @@
+mysql-connector==2.2.9
+pandas==2.2.2
+PyMySQL==1.1.0
+python-dotenv==1.0.1
+Requests==2.31.0
+SQLAlchemy==2.0.29

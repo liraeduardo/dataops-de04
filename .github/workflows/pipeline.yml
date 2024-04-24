@@ -24,4 +24,4 @@ jobs:
 
     - name: Execução dos testes
       run: |
-        print('teste de aplicação')
+        python -m unittest -v test

@@ -16,11 +16,11 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: 3.10
+        python-version: '3.10'
 
     - name: Instalação das dependências
       run: |
-        pip install -r requirements.txt
+        pip install -r app/python/requirements.txt
 
     - name: Execução dos testes
       run: |

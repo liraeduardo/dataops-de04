@@ -10,7 +10,7 @@ jobs:
     name: Run pylint
     runs-on: ubuntu-latest
     outputs:
-      pylint_result: ${{ steps.pylint.outputs.pylint_score }}
+      pylint_result: ${{ steps.pylint.outputs.pylint_result }}
 
     steps:
     - name: Download repo
@@ -31,8 +31,8 @@ jobs:
         pylint_score=$(echo "$pylint_score" | bc)
         echo "Score pylint $pylint_score"
         if [ $(echo "$pylint_score >= 7" | bc -l) ]; then
-          pylint_score=$(echo "success")
-          echo "success"
+          pylint_result=$(echo "success")
+          echo $pylint_result
         else
           echo "failure"
         fi

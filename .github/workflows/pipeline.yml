@@ -28,7 +28,7 @@ jobs:
     - name: Execução dos testes
       id: resultado
       run: |
-        pylint_result=$(pylint app/python/scripts/get_data_v2.py | grep -oP '(?<=rated at ).*(?=/10)')
+        pylint_result=$(pylint app/python/scripts/get_data_v2.py | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p'
         echo "::set-output name=pylint_result::$pylint_result"
       continue-on-error: true
     

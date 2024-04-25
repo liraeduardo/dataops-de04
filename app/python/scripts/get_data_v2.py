@@ -1,3 +1,4 @@
+""" Import de pacotes """
 from datetime import datetime
 import os
 import re
@@ -6,7 +7,6 @@ import time
 
 import logging
 import uuid
-from dotenv import load_dotenv
 import mysql.connector
 import pandas as pd
 import requests
@@ -15,8 +15,6 @@ from sqlalchemy import create_engine
 from config import configs, project_folders
 
 logging.basicConfig(level=logging.INFO)
-load_dotenv()
-
 
 def collect_data():
     """

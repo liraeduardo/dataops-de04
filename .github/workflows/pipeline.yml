@@ -26,13 +26,14 @@ jobs:
         pip install pylint
 
     - name: Execução dos testes
-      id: resultado
       run: |
         pylint_result=$(pylint app/python/scripts/get_data_v2.py | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p'
-        echo "::set-output name=pylint_result::$pylint_result"
+        echo "Score pylint $pylint_result"
+        echo "{name}={pylint_result} >> $GITHUB_OUTPUT"
       continue-on-error: true
     
     - name: Set Pylint result
+      id: resultado
       run: 
         if (( $(echo "${{ steps.pylint.outputs.pylint_result }} >= 7" | bc -l) )); then
           echo "success"

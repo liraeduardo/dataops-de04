@@ -10,7 +10,7 @@ jobs:
     name: Run pylint
     runs-on: ubuntu-latest
     outputs:
-      pylint_result: ${{ steps.pylint.outputs.pylint_result }}
+      pylint_result: ${{ steps.result.outputs.pylint_result }}
 
     steps:
     - name: Download repo
@@ -25,15 +25,17 @@ jobs:
       run: pip install pylint
 
     - name: Pylint score
+      id: result
       run: |
         pylint_score=$(pylint app/python/scripts/get_data_v2.py | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' )
         pylint_score=$(echo "$pylint_score" | bc)
         echo "Score pylint $pylint_score"
         if [ $(echo "$pylint_score >= 7" | bc -l) ]; then
-          pylint_result=$(echo "success")
+          "pylint_result=$(echo "success")" >> "SGITHUB_OUTPUT"
           echo $pylint_result
         else
-          echo "failure"
+          "pylint_result=$(echo "failure")" >> "SGITHUB_OUTPUT"
+          echo $pylint_result
         fi
   
   dockerhub:
@@ -50,5 +52,5 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Pylint score
-        run: echo $needs.pylint.outputs.pylint_result
+      - name: teste de output
+        run: echo ${{needs.pylint.outputs.pylint_result}}

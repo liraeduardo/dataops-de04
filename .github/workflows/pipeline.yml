@@ -32,7 +32,7 @@ jobs:
         pylint_score=$(echo "$pylint_score" | bc)
         echo "Score pylint $pylint_score"
         if [ $(echo "$pylint_score >= 7" | bc -l) ]; then
-          echo "sucess"
+          echo "success"
         else
           echo "failure"
         fi
@@ -40,7 +40,7 @@ jobs:
   dockerhub:
     needs: pylint
     runs-on: ubuntu-latest
-    if: ${{ success() && needs.pylint.outputs.resultado == 'success' }}
+    if: ${{ needs.pylint.outputs.resultado == 'success' }}
     
     steps:
       - name: Checkout repository

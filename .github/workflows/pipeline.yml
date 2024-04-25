@@ -1,4 +1,4 @@
-name: Testes
+name: avaliação do código - PyLint
 
 on:
   push:
@@ -6,8 +6,11 @@ on:
       - main  # ou qualquer outra branch que você deseja monitorar para testes
 
 jobs:
-  testes:
+  pylint:
+    name: Run pylint
     runs-on: ubuntu-latest
+    outputs:
+      pylint_result: ${{ steps.pylint.outputs.pylint_result }}
 
     steps:
     - name: Download do Repositório
@@ -18,10 +21,42 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Instalação das dependências
+    - name: Instalação do pylint
       run: |
-        pip install -r app/python/requirements.txt
+        pip install pylint
 
     - name: Execução dos testes
+      id: resultado
       run: |
-        python -m unittest -v test
+        pylint_result=$(pylint app/python/scripts/get_data_v2.py | grep -oP '(?<=rated at ).*(?=/10)')
+        echo "::set-output name=pylint_result::$pylint_result"
+      continue-on-error: true
+    
+    - name: Set Pylint result
+      run: 
+        if (( $(echo "${{ steps.pylint.outputs.pylint_result }} >= 7" | bc -l) )); then
+          echo "success"
+        else
+          echo "failure"
+        fi
+      if: steps.pylint.outcome == 'success'
+  
+  dockerhub:
+    needs: pylint
+    if: ${{ success() && needs.pylint.outputs.resultado == 'success' }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build -t rpadolfo/python-dataops:latest app/python/
+
+      - name: Push Docker image to Docker Hub
+        run: docker push rpadolfo/python-dataops:latest

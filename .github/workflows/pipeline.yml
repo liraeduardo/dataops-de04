@@ -26,21 +26,15 @@ jobs:
         pip install pylint
 
     - name: Pylint score
+      id: resultado  
       run: |
-        pylint_result=$(pylint app/python/scripts/get_data_v2.py | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' )
-        echo "Score pylint $pylint_result"
-        {name}={pylint_result} >> $GITHUB_OUTPUT
-      continue-on-error: true
-    
-    - name: Pylint result
-      id: resultado
-      run: 
-        if (( $(echo "float(${{ steps.pylint.outputs.pylint_result }}) >= 7" | bc -l) )); then
-          echo "success"
+        pylint_score=$(pylint app/python/scripts/get_data_v2.py | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' )
+        echo "Score pylint $pylint_score"
+        if $pylint_score >= 7 then
+          echo "sucess"
         else
           echo "failure"
-        fi
-      if: steps.pylint.outcome == 'success'
+      continue-on-error: true
   
   dockerhub:
     needs: pylint

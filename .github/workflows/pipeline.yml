@@ -51,4 +51,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Pylint score
-        run: echo ${{needs.pylint.outputs.pylint_result}}
+        run: echo $needs.pylint.outputs.pylint_result

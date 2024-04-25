@@ -31,10 +31,10 @@ jobs:
         pylint_score=$(echo "$pylint_score" | bc)
         echo "Score pylint $pylint_score"
         if [ $(echo "$pylint_score >= 7" | bc -l) ]; then
-          "pylint_result=$(echo "success")" >> "SGITHUB_OUTPUT"
+          pylint_result=$(echo "success")
           echo $pylint_result
         else
-          "pylint_result=$(echo "failure")" >> "SGITHUB_OUTPUT"
+          pylint_result=$(echo "failure")
           echo $pylint_result
         fi
   

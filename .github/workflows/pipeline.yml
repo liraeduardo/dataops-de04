@@ -29,13 +29,13 @@ jobs:
       run: |
         pylint_result=$(pylint app/python/scripts/get_data_v2.py | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' )
         echo "Score pylint $pylint_result"
-        echo "{name}={pylint_result} >> $GITHUB_OUTPUT"
+        {name}={pylint_result} >> $GITHUB_OUTPUT
       continue-on-error: true
     
     - name: Set Pylint result
       id: resultado
       run: 
-        if (( $(echo "${{ steps.pylint.outputs.pylint_result }} >= 7" | bc -l) )); then
+        if (( $(echo "float(${{ steps.pylint.outputs.pylint_result }}) >= 7" | bc -l) )); then
           echo "success"
         else
           echo "failure"

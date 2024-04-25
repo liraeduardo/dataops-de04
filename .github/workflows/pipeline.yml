@@ -13,7 +13,7 @@ jobs:
       pylint_result: ${{ steps.pylint.outputs.pylint_result }}
 
     steps:
-    - name: Download do Repositório
+    - name: Download repo
       uses: actions/checkout@v4
 
     - name: Setup Python
@@ -21,18 +21,18 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Instalação do pylint
+    - name: Setup pylint
       run: |
         pip install pylint
 
-    - name: Execução dos testes
+    - name: Pylint score
       run: |
         pylint_result=$(pylint app/python/scripts/get_data_v2.py | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' )
         echo "Score pylint $pylint_result"
         {name}={pylint_result} >> $GITHUB_OUTPUT
       continue-on-error: true
     
-    - name: Set Pylint result
+    - name: Pylint result
       id: resultado
       run: 
         if (( $(echo "float(${{ steps.pylint.outputs.pylint_result }}) >= 7" | bc -l) )); then

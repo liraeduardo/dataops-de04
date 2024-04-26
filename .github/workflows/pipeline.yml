@@ -55,7 +55,7 @@ jobs:
 
       - name: teste de output
         run: |
-          if [ $(echo "needs.pylint.outputs.pylint_result == sucess") ]; then
+          if [ needs.pylint.outputs.pylint_result == sucess ]; then
             echo "ok"
           else
             echo "nok"

@@ -41,7 +41,7 @@ jobs:
   dockerhub:
     needs: pylint
     runs-on: ubuntu-latest
-    if: ${{ needs.pylint.outputs.pylint_result == 'success' }}
+    if: ${{ always() && needs.pylint.outputs.pylint_result == 'success' }}
     
     steps:
       - name: Checkout repository

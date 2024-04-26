@@ -31,10 +31,10 @@ jobs:
         pylint_score=$(echo "$pylint_score" | bc)
         echo "Score pylint $pylint_score"
         if [ $(echo "$pylint_score >= 7" | bc -l) ]; then
-          echo "pylint_result=success" >> "$GITHUB_OUTPUT"
+          echo "pylint_result="success"" >> "$GITHUB_OUTPUT"
           echo "success"
         else
-          echo "pylint_result=failure" >> "$GITHUB_OUTPUT"
+          echo "pylint_result="failure"" >> "$GITHUB_OUTPUT"
           echo "failure"
         fi
   
@@ -55,7 +55,7 @@ jobs:
 
       - name: teste de output
         run: |
-          if [ $(echo ${{ needs.pylint.outputs.pylint_result }} == sucess) ]; then
+          if [ ${{ needs.pylint.outputs.pylint_result == "sucess") ]; then
             echo "ok"
           else
             echo "nok"

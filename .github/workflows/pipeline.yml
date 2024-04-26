@@ -32,10 +32,10 @@ jobs:
         echo "Score pylint $pylint_score"
         if [ $(echo "$pylint_score >= 7" | bc -l) ]; then
           echo "pylint_result=success" >> "$GITHUB_OUTPUT"
-          echo $pylint_result
+          echo $GITHUB_OUTPUT.pylint_result
         else
           echo "pylint_result=failure" >> "$GITHUB_OUTPUT"
-          echo $pylint_result
+          echo $GITHUB_OUTPUT.pylint_result
         fi
   
   dockerhub:
@@ -55,7 +55,7 @@ jobs:
 
       - name: teste de output
         run: |
-          if [ ${{needs.pylint.outputs.pylint_result}} == 'sucess']; then
+          if [ ${{needs.pylint.outputs.pylint_result}} == "sucess" ]; then
             echo "ok"
           else
             echo "nok"

@@ -31,7 +31,8 @@ jobs:
     
     - name: Pylint warnings
       run: |
-        pylint -sn --output-format=parseable &&
+        echo &&
+        pylint -sn --output-format=parseable \
         --msg-template="{line:3d},{column}:{msg}" \
         app/python/scripts/get_data.py
       

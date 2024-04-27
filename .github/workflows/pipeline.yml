@@ -23,12 +23,16 @@ jobs:
 
     - name: Setup pylint
       run: pip install pylint
+    
+    - name: Pylint logs
+      run: |
+        results=$(pylint app/python/scripts/get_data.py)
+        echo $results
 
-    - name: Pylint score
+    - name: Pylint results
       id: result
       run: |
-        echo pylint app/python/scripts/get_data.py
-        pylint_score=$(pylint app/python/scripts/get_data.py | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' )
+        pylint_score=($result | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' )
         pylint_score=$(echo "$pylint_score" | bc)
         echo "Score pylint $pylint_score"
         if [ $(echo "$pylint_score >= 7" | bc -l) ]; then

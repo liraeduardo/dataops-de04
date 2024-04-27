@@ -112,13 +112,12 @@ def connect_and_save_to_mysql(data):
         engine = create_engine(
             f"mysql+mysqlconnector://root:{os.environ['DB_PASSWORD']}@mysql:3306/db"
         )
-        timeout = 60
-        
+        timeout = 60  
         start_time = time.time()
         while time.time() - start_time <= timeout:
             logging.info('Tentando conexão...')
             time.sleep(20)
-            if engine.connect():        
+            if engine.connect():
                 logging.info('Conectado ao db')
                 data.to_sql('cadastro', con=engine, if_exists='append', index=False)
                 engine.connect().close()
@@ -131,7 +130,6 @@ def connect_and_save_to_mysql(data):
     except Exception as e:
         logging.error('Erro ao conectar e salvar dados no MySQL: %s', e)
         sys.exit()
-
 
 def main():
     """

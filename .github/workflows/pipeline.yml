@@ -30,8 +30,7 @@ jobs:
         pip install -r app/python/requirements.txt
     
     - name: Pylint warnings
-      run: |
-        pylint app/python/scripts/get_data.py
+      run: pylint -sn --output-format=parseable --msg-template="{line:3d},{column}:{msg}" app/python/scripts/get_data.py
       
     - name: Pylint results
       id: result

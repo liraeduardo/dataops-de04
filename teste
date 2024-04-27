@@ -1,7 +1,0 @@
-if: ${{ needs.pylint.outputs.pylint_result == 'success' }}
-
-- name: Build Docker image
-  run: docker build -t rpadolfo/python-dataops:latest app/python/
-
-- name: Push Docker image to Docker Hub
-  run: docker push rpadolfo/python-dataops:latest

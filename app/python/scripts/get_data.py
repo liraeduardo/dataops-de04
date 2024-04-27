@@ -21,7 +21,7 @@ def collect_data():
     Função para coletar os dados da origem e normalizá-los em um DataFrame pandas.
     """
     try:
-        response = requests.get(os.getenv('URL'), timeout=10).json()
+        response = requests.get(os.environ['URL'], timeout=10).json()
         data = pd.json_normalize(response['results'])
         logging.info('Dados coletados na origem')
         logging.info('shape: %s', data.shape)
@@ -110,33 +110,30 @@ def connect_and_save_to_mysql(data):
     Função para conectar ao banco de dados MySQL e salvar os dados na tabela 'cadastro'.
     """
     try:
-        engine = create_engine("mysql+mysqlconnector://root:root@mysql/db")
+        engine = create_engine(
+            f"mysql+mysqlconnector://root:{os.environ['DB_PASSWORD']}@mysql:3306/db"
+        )
         timeout = 60
+        
         start_time = time.time()
-
         while time.time() - start_time <= timeout:
-            try:
-                logging.info('Tentando conexão...')
-                time.sleep(20)
-                con = mysql.connector.connect(
-                    user='root',
-                    password='root',
-                    host='mysql',
-                    port="3306",
-                    database='db'
-                )
+            logging.info('Tentando conexão...')
+            time.sleep(20)
+
+            if engine.connect():        
                 logging.info('Conectado ao db')
                 data.to_sql('cadastro', con=engine, if_exists='append', index=False)
-                con.close()
+                engine.connect().close()
+                
                 logging.info('Salvo na camada silver - mysql')
-                sys.exit()
-            except mysql.connector.Error:
+                sys.exit(0)
+            else:
                 logging.info('Nova tentativa em alguns segundos...')
                 time.sleep(10)
         logging.info('Servidor indisponível.')
     except Exception as e:
         logging.error('Erro ao conectar e salvar dados no MySQL: %s', e)
-        sys.exit(1)
+        sys.exit()
 
 
 def main():

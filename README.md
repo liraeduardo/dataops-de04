@@ -17,9 +17,9 @@ Este é um projeto que tem como objetivo obter dados de uma API, realizar um tra
 - Conta no Docker Hub para enviar a imagem Docker.
 - Conta no GitHub para configurar as ações do GitHub.
 - Confgurar as seguintes variaveis de ambiente:
-    URL
-    DB_PASSWORD
+    -- URL
+    -- DB_PASSWORD
 - Configurar as credenciais do Docker Hub:
-    DOCKER_USERNAME
-    DOCKER_PASSWORD
+    -- DOCKER_USERNAME
+    -- DOCKER_PASSWORD
   

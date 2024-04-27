@@ -53,14 +53,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: teste de output
-        run: |
-          if [ "${{ needs.pylint.outputs.pylint_result }} == sucess" ]; then
-            echo "ok"
-          else
-            echo "nok"
-          fi
-
       - name: Build Docker image
         run: docker build -t rpadolfo/python-dataops:latest app/python/
         

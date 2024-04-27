@@ -67,7 +67,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t liraeduardo/python-dataops-de04:latest app/python/
+        run: docker build -t eduardotlira/python-dataops-de04:latest app/python/
         
       - name: Upload python image to Docker Hub
-        run: docker push liraeduardo/python-dataops-de04:latest
+        run: docker push eduardotlira/python-dataops-de04-de04:latest

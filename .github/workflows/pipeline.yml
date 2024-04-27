@@ -26,12 +26,13 @@ jobs:
     
     - name: Pylint logs
       run: |
-        results=$(pylint app/python/scripts/get_data.py)
+        results=$(pylint app/python/scripts/get_data.py | sed)
         echo $results
 
     - name: Pylint results
       id: result
       run: |
+        pylint_score=$(pylint app/python/scripts/get_data.py | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' )
         pylint_score=($result | sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' )
         pylint_score=$(echo "$pylint_score" | bc)
         echo "Score pylint $pylint_score"

@@ -29,12 +29,10 @@ jobs:
         pip install --upgrade pip  
         pip install -r app/python/requirements.txt
     
-    - name: Pylint logs
+    - name: Pylint warnings
       run: |
         pylint app/python/scripts/get_data.py
-        pylint_warnings=$(pylint app/python/scripts/get_data.py | sed -n '')
-        echo '$pylint_warnings'
-
+      
     - name: Pylint results
       id: result
       run: |

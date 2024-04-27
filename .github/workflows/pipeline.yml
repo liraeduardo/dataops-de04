@@ -26,8 +26,8 @@ jobs:
     
     - name: Pylint logs
       run: |
-        results=$(pylint app/python/scripts/get_data.py | sed)
-        echo $results
+        results=$(pylint app/python/scripts/get_data.py)
+        echo '$results'
 
     - name: Pylint results
       id: result

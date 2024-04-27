@@ -3,7 +3,7 @@ name: avaliação do código - PyLint
 on:
   push:
     branches:
-      - main  # ou qualquer outra branch que você deseja monitorar para testes
+      - clone-repo  # ou qualquer outra branch que você deseja monitorar para teste
 
 jobs:
   pylint:

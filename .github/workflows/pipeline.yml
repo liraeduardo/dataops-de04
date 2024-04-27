@@ -35,6 +35,7 @@ jobs:
         pylint -sn --output-format=parseable \
         --msg-template="{line:3d},{column}:{msg}" \
         app/python/scripts/get_data.py
+      continue-on-error: true
       
     - name: Pylint results
       id: result

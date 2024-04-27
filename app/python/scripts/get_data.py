@@ -104,7 +104,6 @@ def process_data(data):
         logging.error('Erro ao processar os dados: %s', e)
         sys.exit(1)
 
-
 def connect_and_save_to_mysql(data):
     """
     Função para conectar ao banco de dados MySQL e salvar os dados na tabela 'cadastro'.
@@ -119,12 +118,10 @@ def connect_and_save_to_mysql(data):
         while time.time() - start_time <= timeout:
             logging.info('Tentando conexão...')
             time.sleep(20)
-
             if engine.connect():        
                 logging.info('Conectado ao db')
                 data.to_sql('cadastro', con=engine, if_exists='append', index=False)
                 engine.connect().close()
-                
                 logging.info('Salvo na camada silver - mysql')
                 sys.exit(0)
             else:

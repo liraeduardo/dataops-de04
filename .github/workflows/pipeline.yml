@@ -23,11 +23,14 @@ jobs:
 
     - name: Setup pylint
       run: pip install pylint
+
+    - name: Install requirements
+      run: pip install app/requirements.txt
     
     - name: Pylint logs
       run: |
         pylint app/python/scripts/get_data.py
-        pylint_warnings=$(pylint app/python/scripts/get_data.py)
+        pylint_warnings=$(pylint app/python/scripts/get_data.py | sed -n '')
         echo '$pylint_warnings'
 
     - name: Pylint results

@@ -14,6 +14,7 @@ import requests
 from sqlalchemy import create_engine
 from config import configs, project_folders
 
+
 logging.basicConfig(level=logging.INFO)
 
 def collect_data():
